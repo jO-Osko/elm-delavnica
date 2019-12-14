@@ -49,4 +49,4 @@ main =
 
 
 
--- elm-live src/App.elm --open -- --debug
+-- elm-live src/App.elm --open -- --debug --output=dist/js/app.js

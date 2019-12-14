@@ -10544,9 +10544,9 @@ var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$App$update = F2(
 	function (msg, model) {
 		if (msg.$ === 'Increase') {
-			return _Utils_Tuple2(model + 1, $elm$core$Platform$Cmd$none);
+			return _Utils_Tuple2(model + 3, $elm$core$Platform$Cmd$none);
 		} else {
-			return _Utils_Tuple2(model - 1, $elm$core$Platform$Cmd$none);
+			return _Utils_Tuple2(model - 10, $elm$core$Platform$Cmd$none);
 		}
 	});
 var $author$project$App$Decrease = {$: 'Decrease'};

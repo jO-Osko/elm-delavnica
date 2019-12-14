@@ -38,16 +38,16 @@ view model =
                 ]
             ]
             [ Html.text "Zmanjšaj" ]
-        ]
+        ] 
 
 
 update msg model =
     case msg of
         Increase ->
-            ( model + 1, Cmd.none )
+            ( model + 3, Cmd.none )
 
         Decrease ->
-            ( model - 1, Cmd.none )
+            ( model - 10, Cmd.none )
 
 
 main =
@@ -60,4 +60,4 @@ main =
 
 
 
--- elm-live src/App.elm --open -- --debug --output=dist/js/app.js
+-- elm-live src/App.elm --start-page=index_dev.html --open -- --debug --output=dist/js/app.js

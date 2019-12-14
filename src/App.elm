@@ -1,5 +1,8 @@
 module App exposing (main)
 
+import Bootstrap.Button as Button
+import Bootstrap.CDN as CDN
+import Bootstrap.Grid as Grid
 import Browser exposing (element)
 import Html
 import Html.Events as He
@@ -15,16 +18,24 @@ initialize () =
 
 
 view model =
-    Html.div []
-        [ Html.div []
+    Grid.container []
+        [ Html.h1 []
             [ Html.text ("Hello world: " ++ String.fromInt model)
             ]
-        , Html.button
-            [ He.onClick Increase
+        , Button.button
+            [   Button.success,
+                Button.block
+                , Button.attrs
+                [ He.onClick Increase
+                ]
             ]
             [ Html.text "Povečaj" ]
-        , Html.button
-            [ He.onClick Decrease
+        , Button.button
+            [   Button.danger,
+                Button.block
+                , Button.attrs
+                [ He.onClick Decrease
+                ]
             ]
             [ Html.text "Zmanjšaj" ]
         ]

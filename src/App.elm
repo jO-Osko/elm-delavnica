@@ -15,7 +15,13 @@ import User
 
 type Msg
     = UserRefreshResponse (Result Http.Error (List User.User))
-    | Delte User.User
+    | EditMsg User.User EditUserMsg
+
+
+type EditUserMsg
+    = Delete
+    | Increase
+    | Decrease
 
 
 initialize () =
@@ -50,13 +56,23 @@ view model =
                     |> List.reverse
                     |> List.map
                         (\usr ->
+                            let
+                                userMessage =
+                                    EditMsg usr
+                            in
                             Grid.row []
                                 [ Grid.col [] [ Html.text (String.fromInt usr.userUid) ]
                                 , Grid.col [] [ Html.text (String.fromInt usr.fullScore) ]
                                 , Grid.col []
                                     [ Grid.row []
                                         [ Grid.col
-                                            [ Col.attrs [ class "btn btn-danger", He.onClick <| Delte usr ] ]
+                                            [ Col.attrs [ class "btn btn-success", He.onClick <| userMessage Increase ] ]
+                                            [ Html.text "Povečaj" ]
+                                        , Grid.col
+                                            [ Col.attrs [ class "btn btn-warning", He.onClick <| userMessage Decrease ] ]
+                                            [ Html.text "Zmanjšaj" ]
+                                        , Grid.col
+                                            [ Col.attrs [ class "btn btn-danger", He.onClick <| userMessage Delete ] ]
                                             [ Html.text "Izbriši" ]
                                         ]
                                     ]
@@ -71,10 +87,20 @@ update msg model =
         UserRefreshResponse (Ok users) ->
             ( { model | users = users }, Cmd.none )
 
-        Delte user ->
-            ( { model | users = User.removeFromList user model.users }
-            , Cmd.none
-            )
+        EditMsg user editMsg ->
+            let
+                users =
+                    case editMsg of
+                        Delete ->
+                            User.removeFromList user model.users
+
+                        Increase ->
+                            User.updateUser user (\usr -> { usr | fullScore = usr.fullScore + 1 }) model.users
+
+                        Decrease ->
+                            User.updateUser user (\usr -> { usr | fullScore = usr.fullScore - 1 }) model.users
+            in
+            ( { model | users = users }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )

@@ -1,4 +1,4 @@
-module User exposing (User, decodeList, removeFromList)
+module User exposing (User, decodeList, removeFromList, updateUser)
 
 import Dict
 import Json.Decode as Decode exposing (Decoder, succeed)
@@ -18,10 +18,28 @@ removeFromList user list =
     case list of
         [] ->
             []
-        (x::xs) -> 
-            if x.userUid == user.userUid then 
+
+        x :: xs ->
+            if x.userUid == user.userUid then
                 removeFromList user xs
-            else x :: removeFromList user xs
+
+            else
+                x :: removeFromList user xs
+
+
+updateUser : User -> (User -> User) -> List User -> List User
+updateUser user updater list =
+    case list of
+        [] ->
+            []
+
+        x :: xs ->
+            if x.userUid == user.userUid then
+                updater x :: updateUser user updater xs
+
+            else
+                x :: updateUser user updater xs
+
 
 type alias FullResponse =
     { ownerId : String

@@ -3,51 +3,62 @@ module App exposing (main)
 import Bootstrap.Button as Button
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Row as Row
 import Browser exposing (element)
 import Html
+import Html.Attributes exposing (class, href, target)
 import Html.Events as He
+import Http
+import User
 
 
 type Msg
-    = Increase
-    | Decrease
+    = UserRefreshResponse (Result Http.Error (List User.User))
 
 
 initialize () =
-    ( 1, Cmd.none )
+    ( initialModel
+    , Http.get { url = "data/leaderboard.json", expect = Http.expectJson UserRefreshResponse User.decodeList }
+    )
 
 
+type alias Model =
+    { users : List User.User
+    }
+
+
+initialModel =
+    { users = []
+    }
+
+
+view : Model -> Html.Html Msg
 view model =
     Grid.container []
-        [ Html.h1 []
-            [ Html.text ("Hello world: " ++ String.fromInt model)
+        ([ Html.h1 []
+            [ Html.text "Trenutno stanje: "
             ]
-        , Button.button
-            [   Button.success,
-                Button.block
-                , Button.attrs
-                [ He.onClick Increase
-                ]
+         , Grid.row [ Row.attrs [ class "font-weight-bold" ] ]
+            [ Grid.col [] [ Html.text "Uporabniško ime" ]
+            , Grid.col [] [ Html.text "Točke" ]
             ]
-            [ Html.text "Povečaj" ]
-        , Button.button
-            [   Button.danger,
-                Button.block
-                , Button.attrs
-                [ He.onClick Decrease
-                ]
-            ]
-            [ Html.text "Zmanjšaj" ]
-        ] 
+         ]
+            ++ List.map
+                (\usr ->
+                    Grid.row []
+                        [ Grid.col [] [ Html.text (String.fromInt usr.userUid) ]
+                        , Grid.col [] [ Html.text (String.fromInt usr.fullScore) ]
+                        ]
+                )
+                model.users
+        )
 
 
 update msg model =
     case msg of
-        Increase ->
-            ( model + 3, Cmd.none )
-
-        Decrease ->
-            ( model - 10, Cmd.none )
+        UserRefreshResponse (Ok users) -> ({model | users= users}, Cmd.none)
+        _ -> 
+            ( model, Cmd.none )
 
 
 main =

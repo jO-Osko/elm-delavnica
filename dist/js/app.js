@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ca.ag === region.cq.ag)
+	if (region.ca.ah === region.cq.ah)
 	{
-		return 'on line ' + region.ca.ag;
+		return 'on line ' + region.ca.ah;
 	}
-	return 'on lines ' + region.ca.ag + ' through ' + region.cq.ag;
+	return 'on lines ' + region.ca.ah + ' through ' + region.cq.ah;
 }
 
 
@@ -3977,7 +3977,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.dg);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.dh);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.cP === next.cP
-							&& curr.cv === next.cv
-							&& curr.cL.a === next.cL.a
+							&& curr.cQ === next.cQ
+							&& curr.cw === next.cw
+							&& curr.cM.a === next.cM.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { dq: 'hidden', dh: 'visibilitychange' }
+		? { dq: 'hidden', di: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { dq: 'mozHidden', dh: 'mozvisibilitychange' }
+		? { dq: 'mozHidden', di: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { dq: 'msHidden', dh: 'msvisibilitychange' }
+		? { dq: 'msHidden', di: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { dq: 'webkitHidden', dh: 'webkitvisibilitychange' }
-		: { dq: 'hidden', dh: 'visibilitychange' };
+		? { dq: 'webkitHidden', di: 'webkitvisibilitychange' }
+		: { dq: 'hidden', di: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		cW: _Browser_getScene(),
-		c9: {
-			db: _Browser_window.pageXOffset,
-			dc: _Browser_window.pageYOffset,
-			da: _Browser_doc.documentElement.clientWidth,
-			cu: _Browser_doc.documentElement.clientHeight
+		cX: _Browser_getScene(),
+		da: {
+			dc: _Browser_window.pageXOffset,
+			dd: _Browser_window.pageYOffset,
+			db: _Browser_doc.documentElement.clientWidth,
+			cv: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		da: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		cu: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		db: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		cv: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			cW: {
-				da: node.scrollWidth,
-				cu: node.scrollHeight
+			cX: {
+				db: node.scrollWidth,
+				cv: node.scrollHeight
 			},
-			c9: {
-				db: node.scrollLeft,
-				dc: node.scrollTop,
-				da: node.clientWidth,
-				cu: node.clientHeight
+			da: {
+				dc: node.scrollLeft,
+				dd: node.scrollTop,
+				db: node.clientWidth,
+				cv: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			cW: _Browser_getScene(),
-			c9: {
-				db: x,
-				dc: y,
-				da: _Browser_doc.documentElement.clientWidth,
-				cu: _Browser_doc.documentElement.clientHeight
+			cX: _Browser_getScene(),
+			da: {
+				dc: x,
+				dd: y,
+				db: _Browser_doc.documentElement.clientWidth,
+				cv: _Browser_doc.documentElement.clientHeight
 			},
-			dl: {
-				db: x + rect.left,
-				dc: y + rect.top,
-				da: rect.width,
-				cu: rect.height
+			dm: {
+				dc: x + rect.left,
+				dd: y + rect.top,
+				db: rect.width,
+				cv: rect.height
 			}
 		};
 	});
@@ -4365,14 +4365,14 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.dm.a(response)));
+			callback(toTask(request.dn.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.dm.b, xhr)); });
-		$elm$core$Maybe$isJust(request.c7) && _Http_track(router, xhr, request.c7.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.dn.b, xhr)); });
+		$elm$core$Maybe$isJust(request.c8) && _Http_track(router, xhr, request.c8.a);
 
 		try {
 			xhr.open(request.dv, request.dL, true);
@@ -4382,8 +4382,8 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 		_Http_configureRequest(xhr, request);
 
-		request.dg.a && xhr.setRequestHeader('Content-Type', request.dg.a);
-		xhr.send(request.dg.b);
+		request.dh.a && xhr.setRequestHeader('Content-Type', request.dh.a);
+		xhr.send(request.dh.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4394,13 +4394,13 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.ct; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.cu; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
 	xhr.timeout = request.dI.a || 0;
-	xhr.responseType = request.dm.d;
-	xhr.withCredentials = request.de;
+	xhr.responseType = request.dn.d;
+	xhr.withCredentials = request.df;
 }
 
 
@@ -4424,7 +4424,7 @@ function _Http_toMetadata(xhr)
 		dL: xhr.responseURL,
 		dF: xhr.status,
 		dG: xhr.statusText,
-		ct: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		cu: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4520,14 +4520,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			dD: event.loaded,
-			cY: event.total
+			cZ: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			dB: event.loaded,
-			cY: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			cZ: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }var $elm$core$Basics$EQ = 1;
@@ -5034,7 +5034,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {cs: fragment, cv: host, cJ: path, cL: port_, cP: protocol, cQ: query};
+		return {cs: fragment, cw: host, cK: path, cM: port_, cQ: protocol, cR: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5313,19 +5313,21 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$App$UserRefreshResponse = $elm$core$Basics$identity;
+var $author$project$App$UserRefreshResponse = function (a) {
+	return {$: 0, a: a};
+};
 var $author$project$User$FullResponse = F2(
 	function (ownerId, members) {
-		return {cE: members, dA: ownerId};
+		return {cF: members, dA: ownerId};
 	});
 var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $author$project$User$UserData = F3(
 	function (userUid, globalScore, dayScores) {
-		return {aS: dayScores, aV: globalScore, dM: userUid};
+		return {aT: dayScores, aW: globalScore, dM: userUid};
 	});
 var $author$project$User$DayScore = F2(
 	function (star1, star2) {
-		return {cZ: star1, c_: star2};
+		return {c_: star1, c$: star2};
 	});
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
@@ -5655,13 +5657,13 @@ var $author$project$User$decodeFullResponse = A3(
 										},
 										$elm$core$String$toInt(k));
 								},
-								$elm$core$Dict$toList(usr.aS)));
+								$elm$core$Dict$toList(usr.aT)));
 						var fullScore = A3(
 							$elm$core$Dict$foldl,
 							F3(
 								function (_v0, _v1, su) {
-									var star1 = _v1.cZ;
-									var star2 = _v1.c_;
+									var star1 = _v1.c_;
+									var star2 = _v1.c$;
 									return su + $elm$core$List$length(
 										A2(
 											$elm$core$List$filter,
@@ -5674,7 +5676,7 @@ var $author$project$User$decodeFullResponse = A3(
 						return A2(
 							$elm$core$Maybe$map,
 							function (uidInt) {
-								return {aS: scores, $7: fullScore, aV: usr.aV, dM: uidInt};
+								return {aT: scores, ct: fullScore, aW: usr.aW, dM: uidInt};
 							},
 							$elm$core$String$toInt(usr.dM));
 					},
@@ -5689,7 +5691,7 @@ var $author$project$User$decodeFullResponse = A3(
 var $author$project$User$decodeList = A2(
 	$elm$json$Json$Decode$map,
 	function (x) {
-		return x.cE;
+		return x.cF;
 	},
 	$author$project$User$decodeFullResponse);
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
@@ -6201,7 +6203,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {cS: reqs, c$: subs};
+		return {cT: reqs, c0: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6245,7 +6247,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.c7;
+							var _v4 = req.c8;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6275,7 +6277,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.cS));
+			A3($elm$http$Http$updateReqs, router, cmds, state.cT));
 	});
 var $elm$http$Http$maybeSend = F4(
 	function (router, desiredTracker, progress, _v0) {
@@ -6300,7 +6302,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.c$)));
+					state.c0)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6314,13 +6316,13 @@ var $elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return $elm$http$Http$Request(
 				{
-					de: r.de,
-					dg: r.dg,
-					dm: A2(_Http_mapExpect, func, r.dm),
-					ct: r.ct,
+					df: r.df,
+					dh: r.dh,
+					dn: A2(_Http_mapExpect, func, r.dn),
+					cu: r.cu,
 					dv: r.dv,
 					dI: r.dI,
-					c7: r.c7,
+					c8: r.c8,
 					dL: r.dL
 				});
 		}
@@ -6344,19 +6346,19 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{de: false, dg: r.dg, dm: r.dm, ct: r.ct, dv: r.dv, dI: r.dI, c7: r.c7, dL: r.dL}));
+			{df: false, dh: r.dh, dn: r.dn, cu: r.cu, dv: r.dv, dI: r.dI, c8: r.c8, dL: r.dL}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{dg: $elm$http$Http$emptyBody, dm: r.dm, ct: _List_Nil, dv: 'GET', dI: $elm$core$Maybe$Nothing, c7: $elm$core$Maybe$Nothing, dL: r.dL});
+		{dh: $elm$http$Http$emptyBody, dn: r.dn, cu: _List_Nil, dv: 'GET', dI: $elm$core$Maybe$Nothing, c8: $elm$core$Maybe$Nothing, dL: r.dL});
 };
-var $author$project$App$initialModel = {bK: _List_Nil};
+var $author$project$App$initialModel = {V: _List_Nil};
 var $author$project$App$initialize = function (_v0) {
 	return _Utils_Tuple2(
 		$author$project$App$initialModel,
 		$elm$http$Http$get(
 			{
-				dm: A2($elm$http$Http$expectJson, $elm$core$Basics$identity, $author$project$User$decodeList),
+				dn: A2($elm$http$Http$expectJson, $author$project$App$UserRefreshResponse, $author$project$User$decodeList),
 				dL: 'data/leaderboard.json'
 			}));
 };
@@ -6364,19 +6366,63 @@ var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$User$removeFromList = F2(
+	function (user, list) {
+		removeFromList:
+		while (true) {
+			if (!list.b) {
+				return _List_Nil;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (_Utils_eq(x.dM, user.dM)) {
+					var $temp$user = user,
+						$temp$list = xs;
+					user = $temp$user;
+					list = $temp$list;
+					continue removeFromList;
+				} else {
+					return A2(
+						$elm$core$List$cons,
+						x,
+						A2($author$project$User$removeFromList, user, xs));
+				}
+			}
+		}
+	});
 var $author$project$App$update = F2(
 	function (msg, model) {
 		if (!msg.$) {
-			var users = msg.a;
+			if (!msg.a.$) {
+				var users = msg.a.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{V: users}),
+					$elm$core$Platform$Cmd$none);
+			} else {
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			}
+		} else {
+			var user = msg.a;
 			return _Utils_Tuple2(
 				_Utils_update(
 					model,
-					{bK: users}),
+					{
+						V: A2($author$project$User$removeFromList, user, model.V)
+					}),
 				$elm$core$Platform$Cmd$none);
-		} else {
-			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
+var $author$project$App$Delte = function (a) {
+	return {$: 1, a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$ColAttrs = function (a) {
+	return {$: 6, a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Col$attrs = function (attrs_) {
+	return $rundis$elm_bootstrap$Bootstrap$Grid$Internal$ColAttrs(attrs_);
+};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$RowAttrs = function (a) {
 	return {$: 2, a: a};
 };
@@ -6414,225 +6460,242 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 			children);
 	});
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col = 0;
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width = F2(
 	function (screenSize, columnCount) {
-		return {cm: columnCount, cX: screenSize};
+		return {cm: columnCount, cY: screenSize};
 	});
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$XS = 0;
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColAlign = F2(
 	function (align_, options) {
-		var _v0 = align_.cX;
+		var _v0 = align_.cY;
 		switch (_v0) {
 			case 0:
 				return _Utils_update(
 					options,
 					{
-						aD: $elm$core$Maybe$Just(align_)
+						aE: $elm$core$Maybe$Just(align_)
 					});
 			case 1:
-				return _Utils_update(
-					options,
-					{
-						aB: $elm$core$Maybe$Just(align_)
-					});
-			case 2:
-				return _Utils_update(
-					options,
-					{
-						aA: $elm$core$Maybe$Just(align_)
-					});
-			case 3:
-				return _Utils_update(
-					options,
-					{
-						az: $elm$core$Maybe$Just(align_)
-					});
-			default:
 				return _Utils_update(
 					options,
 					{
 						aC: $elm$core$Maybe$Just(align_)
 					});
+			case 2:
+				return _Utils_update(
+					options,
+					{
+						aB: $elm$core$Maybe$Just(align_)
+					});
+			case 3:
+				return _Utils_update(
+					options,
+					{
+						aA: $elm$core$Maybe$Just(align_)
+					});
+			default:
+				return _Utils_update(
+					options,
+					{
+						aD: $elm$core$Maybe$Just(align_)
+					});
 		}
 	});
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColOffset = F2(
 	function (offset_, options) {
-		var _v0 = offset_.cX;
+		var _v0 = offset_.cY;
 		switch (_v0) {
 			case 0:
 				return _Utils_update(
 					options,
 					{
-						bd: $elm$core$Maybe$Just(offset_)
+						be: $elm$core$Maybe$Just(offset_)
 					});
 			case 1:
+				return _Utils_update(
+					options,
+					{
+						bb: $elm$core$Maybe$Just(offset_)
+					});
+			case 2:
 				return _Utils_update(
 					options,
 					{
 						ba: $elm$core$Maybe$Just(offset_)
 					});
-			case 2:
+			case 3:
 				return _Utils_update(
 					options,
 					{
 						a9: $elm$core$Maybe$Just(offset_)
 					});
-			case 3:
-				return _Utils_update(
-					options,
-					{
-						a8: $elm$core$Maybe$Just(offset_)
-					});
 			default:
 				return _Utils_update(
 					options,
 					{
-						bc: $elm$core$Maybe$Just(offset_)
+						bd: $elm$core$Maybe$Just(offset_)
 					});
 		}
 	});
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColOrder = F2(
 	function (order_, options) {
-		var _v0 = order_.cX;
+		var _v0 = order_.cY;
 		switch (_v0) {
 			case 0:
 				return _Utils_update(
 					options,
 					{
-						bn: $elm$core$Maybe$Just(order_)
+						bo: $elm$core$Maybe$Just(order_)
 					});
 			case 1:
-				return _Utils_update(
-					options,
-					{
-						bl: $elm$core$Maybe$Just(order_)
-					});
-			case 2:
-				return _Utils_update(
-					options,
-					{
-						bk: $elm$core$Maybe$Just(order_)
-					});
-			case 3:
-				return _Utils_update(
-					options,
-					{
-						bj: $elm$core$Maybe$Just(order_)
-					});
-			default:
 				return _Utils_update(
 					options,
 					{
 						bm: $elm$core$Maybe$Just(order_)
 					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColPull = F2(
-	function (pull_, options) {
-		var _v0 = pull_.cX;
-		switch (_v0) {
-			case 0:
-				return _Utils_update(
-					options,
-					{
-						bt: $elm$core$Maybe$Just(pull_)
-					});
-			case 1:
-				return _Utils_update(
-					options,
-					{
-						br: $elm$core$Maybe$Just(pull_)
-					});
 			case 2:
 				return _Utils_update(
 					options,
 					{
-						bq: $elm$core$Maybe$Just(pull_)
+						bl: $elm$core$Maybe$Just(order_)
 					});
 			case 3:
 				return _Utils_update(
 					options,
 					{
-						bp: $elm$core$Maybe$Just(pull_)
+						bk: $elm$core$Maybe$Just(order_)
 					});
 			default:
+				return _Utils_update(
+					options,
+					{
+						bn: $elm$core$Maybe$Just(order_)
+					});
+		}
+	});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColPull = F2(
+	function (pull_, options) {
+		var _v0 = pull_.cY;
+		switch (_v0) {
+			case 0:
+				return _Utils_update(
+					options,
+					{
+						bu: $elm$core$Maybe$Just(pull_)
+					});
+			case 1:
 				return _Utils_update(
 					options,
 					{
 						bs: $elm$core$Maybe$Just(pull_)
 					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColPush = F2(
-	function (push_, options) {
-		var _v0 = push_.cX;
-		switch (_v0) {
-			case 0:
-				return _Utils_update(
-					options,
-					{
-						by: $elm$core$Maybe$Just(push_)
-					});
-			case 1:
-				return _Utils_update(
-					options,
-					{
-						bw: $elm$core$Maybe$Just(push_)
-					});
 			case 2:
 				return _Utils_update(
 					options,
 					{
-						bv: $elm$core$Maybe$Just(push_)
+						br: $elm$core$Maybe$Just(pull_)
 					});
 			case 3:
 				return _Utils_update(
 					options,
 					{
-						bu: $elm$core$Maybe$Just(push_)
+						bq: $elm$core$Maybe$Just(pull_)
 					});
 			default:
+				return _Utils_update(
+					options,
+					{
+						bt: $elm$core$Maybe$Just(pull_)
+					});
+		}
+	});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColPush = F2(
+	function (push_, options) {
+		var _v0 = push_.cY;
+		switch (_v0) {
+			case 0:
+				return _Utils_update(
+					options,
+					{
+						bz: $elm$core$Maybe$Just(push_)
+					});
+			case 1:
 				return _Utils_update(
 					options,
 					{
 						bx: $elm$core$Maybe$Just(push_)
 					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColWidth = F2(
-	function (width_, options) {
-		var _v0 = width_.cX;
-		switch (_v0) {
-			case 0:
-				return _Utils_update(
-					options,
-					{
-						au: $elm$core$Maybe$Just(width_)
-					});
-			case 1:
-				return _Utils_update(
-					options,
-					{
-						as: $elm$core$Maybe$Just(width_)
-					});
 			case 2:
 				return _Utils_update(
 					options,
 					{
-						ar: $elm$core$Maybe$Just(width_)
+						bw: $elm$core$Maybe$Just(push_)
 					});
 			case 3:
 				return _Utils_update(
 					options,
 					{
-						aq: $elm$core$Maybe$Just(width_)
+						bv: $elm$core$Maybe$Just(push_)
 					});
 			default:
 				return _Utils_update(
 					options,
 					{
+						by: $elm$core$Maybe$Just(push_)
+					});
+		}
+	});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColWidth = F2(
+	function (width_, options) {
+		var _v0 = width_.cY;
+		switch (_v0) {
+			case 0:
+				return _Utils_update(
+					options,
+					{
+						av: $elm$core$Maybe$Just(width_)
+					});
+			case 1:
+				return _Utils_update(
+					options,
+					{
 						at: $elm$core$Maybe$Just(width_)
+					});
+			case 2:
+				return _Utils_update(
+					options,
+					{
+						as: $elm$core$Maybe$Just(width_)
+					});
+			case 3:
+				return _Utils_update(
+					options,
+					{
+						ar: $elm$core$Maybe$Just(width_)
+					});
+			default:
+				return _Utils_update(
+					options,
+					{
+						au: $elm$core$Maybe$Just(width_)
 					});
 		}
 	});
@@ -6644,7 +6707,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColOption = F2(
 				return _Utils_update(
 					options,
 					{
-						aG: _Utils_ap(options.aG, attrs)
+						aH: _Utils_ap(options.aH, attrs)
 					});
 			case 0:
 				var width_ = modifier.a;
@@ -6669,7 +6732,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyColOption = F2(
 				return _Utils_update(
 					options,
 					{
-						bG: $elm$core$Maybe$Just(align)
+						bH: $elm$core$Maybe$Just(align)
 					});
 		}
 	});
@@ -6729,7 +6792,7 @@ var $elm$core$Maybe$withDefault = F2(
 		}
 	});
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$colWidthClass = function (_v0) {
-	var screenSize = _v0.cX;
+	var screenSize = _v0.cY;
 	var columnCount = _v0.cm;
 	return $elm$html$Html$Attributes$class(
 		'col' + (A2(
@@ -6759,7 +6822,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$colWidthsToAttributes = functi
 		$elm$core$Basics$identity,
 		A2($elm$core$List$map, width_, widths));
 };
-var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$defaultColOptions = {az: $elm$core$Maybe$Nothing, aA: $elm$core$Maybe$Nothing, aB: $elm$core$Maybe$Nothing, aC: $elm$core$Maybe$Nothing, aD: $elm$core$Maybe$Nothing, aG: _List_Nil, a8: $elm$core$Maybe$Nothing, a9: $elm$core$Maybe$Nothing, ba: $elm$core$Maybe$Nothing, bc: $elm$core$Maybe$Nothing, bd: $elm$core$Maybe$Nothing, bj: $elm$core$Maybe$Nothing, bk: $elm$core$Maybe$Nothing, bl: $elm$core$Maybe$Nothing, bm: $elm$core$Maybe$Nothing, bn: $elm$core$Maybe$Nothing, bp: $elm$core$Maybe$Nothing, bq: $elm$core$Maybe$Nothing, br: $elm$core$Maybe$Nothing, bs: $elm$core$Maybe$Nothing, bt: $elm$core$Maybe$Nothing, bu: $elm$core$Maybe$Nothing, bv: $elm$core$Maybe$Nothing, bw: $elm$core$Maybe$Nothing, bx: $elm$core$Maybe$Nothing, by: $elm$core$Maybe$Nothing, bG: $elm$core$Maybe$Nothing, aq: $elm$core$Maybe$Nothing, ar: $elm$core$Maybe$Nothing, as: $elm$core$Maybe$Nothing, at: $elm$core$Maybe$Nothing, au: $elm$core$Maybe$Nothing};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$defaultColOptions = {aA: $elm$core$Maybe$Nothing, aB: $elm$core$Maybe$Nothing, aC: $elm$core$Maybe$Nothing, aD: $elm$core$Maybe$Nothing, aE: $elm$core$Maybe$Nothing, aH: _List_Nil, a9: $elm$core$Maybe$Nothing, ba: $elm$core$Maybe$Nothing, bb: $elm$core$Maybe$Nothing, bd: $elm$core$Maybe$Nothing, be: $elm$core$Maybe$Nothing, bk: $elm$core$Maybe$Nothing, bl: $elm$core$Maybe$Nothing, bm: $elm$core$Maybe$Nothing, bn: $elm$core$Maybe$Nothing, bo: $elm$core$Maybe$Nothing, bq: $elm$core$Maybe$Nothing, br: $elm$core$Maybe$Nothing, bs: $elm$core$Maybe$Nothing, bt: $elm$core$Maybe$Nothing, bu: $elm$core$Maybe$Nothing, bv: $elm$core$Maybe$Nothing, bw: $elm$core$Maybe$Nothing, bx: $elm$core$Maybe$Nothing, by: $elm$core$Maybe$Nothing, bz: $elm$core$Maybe$Nothing, bH: $elm$core$Maybe$Nothing, ar: $elm$core$Maybe$Nothing, as: $elm$core$Maybe$Nothing, at: $elm$core$Maybe$Nothing, au: $elm$core$Maybe$Nothing, av: $elm$core$Maybe$Nothing};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$offsetCountOption = function (size) {
 	switch (size) {
 		case 0:
@@ -6798,8 +6861,8 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$screenSizeToPartialString = fu
 	}
 };
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$offsetClass = function (_v0) {
-	var screenSize = _v0.cX;
-	var offsetCount = _v0.cI;
+	var screenSize = _v0.cY;
+	var offsetCount = _v0.cJ;
 	return $elm$html$Html$Attributes$class(
 		'offset' + ($rundis$elm_bootstrap$Bootstrap$Grid$Internal$screenSizeToPartialString(screenSize) + $rundis$elm_bootstrap$Bootstrap$Grid$Internal$offsetCountOption(offsetCount)));
 };
@@ -6847,7 +6910,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$orderColOption = function (siz
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$orderToAttributes = function (orders) {
 	var order_ = function (m) {
 		if (!m.$) {
-			var screenSize = m.a.cX;
+			var screenSize = m.a.cY;
 			var moveCount = m.a.T;
 			return $elm$core$Maybe$Just(
 				$elm$html$Html$Attributes$class(
@@ -6894,7 +6957,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$moveCountOption = function (si
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$pullsToAttributes = function (pulls) {
 	var pull_ = function (m) {
 		if (!m.$) {
-			var screenSize = m.a.cX;
+			var screenSize = m.a.cY;
 			var moveCount = m.a.T;
 			return $elm$core$Maybe$Just(
 				$elm$html$Html$Attributes$class(
@@ -6911,7 +6974,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$pullsToAttributes = function (
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$pushesToAttributes = function (pushes) {
 	var push_ = function (m) {
 		if (!m.$) {
-			var screenSize = m.a.cX;
+			var screenSize = m.a.cY;
 			var moveCount = m.a.T;
 			return $elm$core$Maybe$Just(
 				$elm$html$Html$Attributes$class(
@@ -6937,7 +7000,7 @@ var $rundis$elm_bootstrap$Bootstrap$Internal$Text$textAlignDirOption = function 
 };
 var $rundis$elm_bootstrap$Bootstrap$Internal$Text$textAlignClass = function (_v0) {
 	var dir = _v0.co;
-	var size = _v0.cY;
+	var size = _v0.cZ;
 	return $elm$html$Html$Attributes$class(
 		'text' + (A2(
 			$elm$core$Maybe$withDefault,
@@ -6962,7 +7025,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$verticalAlignOption = function
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$vAlignClass = F2(
 	function (prefix, _v0) {
 		var align = _v0.ci;
-		var screenSize = _v0.cX;
+		var screenSize = _v0.cY;
 		return $elm$html$Html$Attributes$class(
 			_Utils_ap(
 				prefix,
@@ -6998,43 +7061,43 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$colAttributes = function (modi
 			$elm$core$List$filterMap,
 			$elm$core$Basics$identity,
 			_List_fromArray(
-				[options.au, options.as, options.ar, options.aq, options.at])));
+				[options.av, options.at, options.as, options.ar, options.au])));
 	return _Utils_ap(
 		$rundis$elm_bootstrap$Bootstrap$Grid$Internal$colWidthsToAttributes(
 			_List_fromArray(
 				[
 					shouldAddDefaultXs ? $elm$core$Maybe$Just(
-					A2($rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width, 0, 0)) : options.au,
+					A2($rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width, 0, 0)) : options.av,
+					options.at,
 					options.as,
 					options.ar,
-					options.aq,
-					options.at
+					options.au
 				])),
 		_Utils_ap(
 			$rundis$elm_bootstrap$Bootstrap$Grid$Internal$offsetsToAttributes(
 				_List_fromArray(
-					[options.bd, options.ba, options.a9, options.a8, options.bc])),
+					[options.be, options.bb, options.ba, options.a9, options.bd])),
 			_Utils_ap(
 				$rundis$elm_bootstrap$Bootstrap$Grid$Internal$pullsToAttributes(
 					_List_fromArray(
-						[options.bt, options.br, options.bq, options.bp, options.bs])),
+						[options.bu, options.bs, options.br, options.bq, options.bt])),
 				_Utils_ap(
 					$rundis$elm_bootstrap$Bootstrap$Grid$Internal$pushesToAttributes(
 						_List_fromArray(
-							[options.by, options.bw, options.bv, options.bu, options.bx])),
+							[options.bz, options.bx, options.bw, options.bv, options.by])),
 					_Utils_ap(
 						$rundis$elm_bootstrap$Bootstrap$Grid$Internal$orderToAttributes(
 							_List_fromArray(
-								[options.bn, options.bl, options.bk, options.bj, options.bm])),
+								[options.bo, options.bm, options.bl, options.bk, options.bn])),
 						_Utils_ap(
 							A2(
 								$rundis$elm_bootstrap$Bootstrap$Grid$Internal$vAlignsToAttributes,
 								'align-self-',
 								_List_fromArray(
-									[options.aD, options.aB, options.aA, options.az, options.aC])),
+									[options.aE, options.aC, options.aB, options.aA, options.aD])),
 							_Utils_ap(
 								function () {
-									var _v0 = options.bG;
+									var _v0 = options.bH;
 									if (!_v0.$) {
 										var a = _v0.a;
 										return _List_fromArray(
@@ -7045,7 +7108,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$colAttributes = function (modi
 										return _List_Nil;
 									}
 								}(),
-								options.aG)))))));
+								options.aH)))))));
 };
 var $elm$virtual_dom$VirtualDom$keyedNode = function (tag) {
 	return _VirtualDom_keyedNode(
@@ -7076,43 +7139,43 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$renderCol = function (column) {
 };
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyRowHAlign = F2(
 	function (align, options) {
-		var _v0 = align.cX;
+		var _v0 = align.cY;
 		switch (_v0) {
 			case 0:
 				return _Utils_update(
 					options,
 					{
-						a$: $elm$core$Maybe$Just(align)
+						a0: $elm$core$Maybe$Just(align)
 					});
 			case 1:
 				return _Utils_update(
 					options,
 					{
-						aZ: $elm$core$Maybe$Just(align)
+						a_: $elm$core$Maybe$Just(align)
 					});
 			case 2:
 				return _Utils_update(
 					options,
 					{
-						aY: $elm$core$Maybe$Just(align)
+						aZ: $elm$core$Maybe$Just(align)
 					});
 			case 3:
 				return _Utils_update(
 					options,
 					{
-						aX: $elm$core$Maybe$Just(align)
+						aY: $elm$core$Maybe$Just(align)
 					});
 			default:
 				return _Utils_update(
 					options,
 					{
-						a_: $elm$core$Maybe$Just(align)
+						a$: $elm$core$Maybe$Just(align)
 					});
 		}
 	});
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyRowVAlign = F2(
 	function (align_, options) {
-		var _v0 = align_.cX;
+		var _v0 = align_.cY;
 		switch (_v0) {
 			case 0:
 				return _Utils_update(
@@ -7154,7 +7217,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyRowOption = F2(
 				return _Utils_update(
 					options,
 					{
-						aG: _Utils_ap(options.aG, attrs)
+						aH: _Utils_ap(options.aH, attrs)
 					});
 			case 0:
 				var align = modifier.a;
@@ -7164,7 +7227,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyRowOption = F2(
 				return A2($rundis$elm_bootstrap$Bootstrap$Grid$Internal$applyRowHAlign, align, options);
 		}
 	});
-var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$defaultRowOptions = {aG: _List_Nil, aX: $elm$core$Maybe$Nothing, aY: $elm$core$Maybe$Nothing, aZ: $elm$core$Maybe$Nothing, a_: $elm$core$Maybe$Nothing, a$: $elm$core$Maybe$Nothing, bL: $elm$core$Maybe$Nothing, bM: $elm$core$Maybe$Nothing, bN: $elm$core$Maybe$Nothing, bO: $elm$core$Maybe$Nothing, bP: $elm$core$Maybe$Nothing};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$defaultRowOptions = {aH: _List_Nil, aY: $elm$core$Maybe$Nothing, aZ: $elm$core$Maybe$Nothing, a_: $elm$core$Maybe$Nothing, a$: $elm$core$Maybe$Nothing, a0: $elm$core$Maybe$Nothing, bL: $elm$core$Maybe$Nothing, bM: $elm$core$Maybe$Nothing, bN: $elm$core$Maybe$Nothing, bO: $elm$core$Maybe$Nothing, bP: $elm$core$Maybe$Nothing};
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$horizontalAlignOption = function (align) {
 	switch (align) {
 		case 0:
@@ -7181,7 +7244,7 @@ var $rundis$elm_bootstrap$Bootstrap$General$Internal$horizontalAlignOption = fun
 };
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$hAlignClass = function (_v0) {
 	var align = _v0.ci;
-	var screenSize = _v0.cX;
+	var screenSize = _v0.cY;
 	return $elm$html$Html$Attributes$class(
 		'justify-content-' + (A2(
 			$elm$core$Maybe$withDefault,
@@ -7218,8 +7281,8 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$rowAttributes = function (modi
 			_Utils_ap(
 				$rundis$elm_bootstrap$Bootstrap$Grid$Internal$hAlignsToAttributes(
 					_List_fromArray(
-						[options.a$, options.aZ, options.aY, options.aX, options.a_])),
-				options.aG)));
+						[options.a0, options.a_, options.aZ, options.aY, options.a$])),
+				options.aH)));
 };
 var $rundis$elm_bootstrap$Bootstrap$Grid$row = F2(
 	function (options, cols) {
@@ -7228,6 +7291,7 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$row = F2(
 			$rundis$elm_bootstrap$Bootstrap$Grid$Internal$rowAttributes(options),
 			A2($elm$core$List$map, $rundis$elm_bootstrap$Bootstrap$Grid$renderCol, cols));
 	});
+var $elm$core$List$sortBy = _List_sortBy;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$App$view = function (model) {
@@ -7269,6 +7333,13 @@ var $author$project$App$view = function (model) {
 							_List_fromArray(
 								[
 									$elm$html$Html$text('Točke')
+								])),
+							A2(
+							$rundis$elm_bootstrap$Bootstrap$Grid$col,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Urejanje')
 								]))
 						]))
 				]),
@@ -7294,11 +7365,45 @@ var $author$project$App$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text(
-										$elm$core$String$fromInt(usr.$7))
+										$elm$core$String$fromInt(usr.ct))
+									])),
+								A2(
+								$rundis$elm_bootstrap$Bootstrap$Grid$col,
+								_List_Nil,
+								_List_fromArray(
+									[
+										A2(
+										$rundis$elm_bootstrap$Bootstrap$Grid$row,
+										_List_Nil,
+										_List_fromArray(
+											[
+												A2(
+												$rundis$elm_bootstrap$Bootstrap$Grid$col,
+												_List_fromArray(
+													[
+														$rundis$elm_bootstrap$Bootstrap$Grid$Col$attrs(
+														_List_fromArray(
+															[
+																$elm$html$Html$Attributes$class('btn btn-danger'),
+																$elm$html$Html$Events$onClick(
+																$author$project$App$Delte(usr))
+															]))
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Izbriši')
+													]))
+											]))
 									]))
 							]));
 				},
-				model.bK)));
+				$elm$core$List$reverse(
+					A2(
+						$elm$core$List$sortBy,
+						function ($) {
+							return $.ct;
+						},
+						model.V)))));
 };
 var $author$project$App$main = $elm$browser$Browser$element(
 	{

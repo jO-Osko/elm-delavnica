@@ -1,4 +1,4 @@
-module User exposing (User, decodeList)
+module User exposing (User, decodeList, removeFromList)
 
 import Dict
 import Json.Decode as Decode exposing (Decoder, succeed)

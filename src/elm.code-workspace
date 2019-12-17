@@ -4,5 +4,9 @@
 			"path": "/Users/joosko/work/fmf/racunalniske_delavnica/elm"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"[elm]": {
+			"editor.formatOnSave": true
+		}
+	}
 }

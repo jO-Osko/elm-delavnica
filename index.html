@@ -15,7 +15,11 @@
         </div>
         <script type="text/javascript" src="dist/js/app.min.js"></script>
         <script>
-            Elm.App.init({node: document.getElementById("elm-container")})
+            var app = Elm.App.init({node: document.getElementById("elm-container")})
+            app.ports.confirm.subscribe(function(msg){
+                var resp = confirm(msg) + 10;
+                app.ports.response.send({msg: msg, resp:resp})
+            })
         </script>
     </body>
 </html>

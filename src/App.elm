@@ -1,4 +1,4 @@
-module App exposing (main)
+port module App exposing (main)
 
 import Bootstrap.Button as Button
 import Bootstrap.CDN as CDN
@@ -10,12 +10,17 @@ import Html
 import Html.Attributes exposing (class, href, target)
 import Html.Events as He
 import Http
+import Time
 import User
+import Confirmer
 
 
 type Msg
     = UserRefreshResponse (Result Http.Error (List User.User))
     | EditMsg User.User EditUserMsg
+    | UpdateTime Time.Posix
+    | ConfirmMe String
+    | Response RespMsg
 
 
 type EditUserMsg
@@ -24,27 +29,32 @@ type EditUserMsg
     | Decrease
 
 
+initialize : () -> ( Model, Cmd Msg )
 initialize () =
-    ( initialModel
+    ( { initialModel | initialNum = 1 }
     , Http.get { url = "data/leaderboard.json", expect = Http.expectJson UserRefreshResponse User.decodeList }
     )
 
 
 type alias Model =
     { users : List User.User
+    , initialNum : Int
+    , neki: String
     }
 
 
 initialModel =
     { users = []
+    , initialNum = -1
+    , neki = ""
     }
 
 
 view : Model -> Html.Html Msg
 view model =
     Grid.container []
-        ([ Html.h1 []
-            [ Html.text "Trenutno stanje: "
+        ([ Html.h1 [ He.onClick (ConfirmMe "Potrdi")]
+            [ Html.text ("Trenutno stanje: " ++ String.fromInt model.initialNum ++ model.neki)
             ]
          , Grid.row [ Row.attrs [ class "font-weight-bold" ] ]
             [ Grid.col [] [ Html.text "Uporabniško ime" ]
@@ -102,18 +112,27 @@ update msg model =
             in
             ( { model | users = users }, Cmd.none )
 
-        _ ->
-            ( model, Cmd.none )
-
+        UpdateTime time ->
+            ( {model | initialNum = Time.posixToMillis time}, Cmd.none )
+        Response sMsg ->
+            ( {model | neki = (sMsg.msg ++ String.fromInt sMsg.resp ) }, Cmd.none)
+        ConfirmMe sMsg ->
+            (model, Confirmer.confirm sMsg)
+        _ -> (model, Cmd.none)
 
 main =
     element
         { init = initialize
         , update = update
         , view = view
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = \_ -> response Response --Time.every 1000 UpdateTime
         }
 
 
 
 -- elm-live src/App.elm --start-page=index_dev.html --open -- --debug --output=dist/js/app.js
+
+type alias RespMsg = 
+    {msg: String, resp: Int}
+
+port response: (RespMsg -> msg) -> Sub msg
